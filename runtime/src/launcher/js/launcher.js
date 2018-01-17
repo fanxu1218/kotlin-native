@@ -264,6 +264,9 @@ function instantiateAndRunSync(arraybuffer, args) {
 
 konan.moduleEntry = function (args) {
     if (isBrowser()) {
+        if (!document.currentScript.hasAttribute("wasm")) {
+            throw new Error('Could not find the wasm attribute pointing to the WebAssembly binary.') ;
+        }
         var filename = document.currentScript.getAttribute("wasm");
         fetch(filename).then( function(response) {
             return response.arrayBuffer();
