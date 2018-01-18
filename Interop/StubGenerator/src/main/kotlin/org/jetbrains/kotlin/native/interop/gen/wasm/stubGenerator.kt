@@ -254,17 +254,18 @@ fun Interface.generateKotlinClassConverter() =
     "  }\n"
 
 fun Interface.generateKotlin(): String {
-
-    fun String.skipForGlobal() = 
-        if (! this@generateKotlin.isGlobal) this 
-        else ""
+    fun unlessGlobal(value: () -> String): String {
+        return if (this.isGlobal) "" else value()
+    }
 
     return generateMemberWasmStubs() + 
-        generateKotlinClassHeader().skipForGlobal() +
+        unlessGlobal { generateKotlinClassHeader() } +
         generateKotlinMembers() + 
-        generateKotlinCompanion().skipForGlobal() +
-        generateKotlinClassFooter().skipForGlobal() +
-        generateKotlinClassConverter().skipForGlobal()
+        unlessGlobal {
+            generateKotlinCompanion() +
+            generateKotlinClassFooter() +
+            generateKotlinClassConverter()
+        }
 }
 
 fun generateKotlin(pkg: String, interfaces: List<Interface>) =
