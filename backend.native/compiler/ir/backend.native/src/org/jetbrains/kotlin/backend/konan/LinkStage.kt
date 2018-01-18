@@ -288,7 +288,6 @@ internal open class WasmPlatform(distribution: Distribution)
                 linkedJavaScript.writeBytes(linkerHeader.toByteArray());
 
                 jsFiles.forEach {
-                    println("JsFile: $it")
                     linkedJavaScript.appendBytes(File(it).readBytes())
                 }
 
