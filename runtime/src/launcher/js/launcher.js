@@ -109,7 +109,7 @@ function doubleToTwoInts(value) {
     var ints = new Int32Array(buffer);
     var doubles = new Float64Array(buffer);
     doubles[0] = value;
-    var twoInts = {upper: ints[1], lower: ints[2]};
+    var twoInts = {upper: ints[1], lower: ints[0]};
     return twoInts
 }
 
